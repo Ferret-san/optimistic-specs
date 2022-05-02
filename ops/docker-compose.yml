@@ -20,7 +20,6 @@ services:
       - ${PWD}/../.devnet/genesis-l1.json:/genesis.json
 
   l2:
-    user: erigon
     build:
       context: .
       dockerfile: Dockerfile.l2

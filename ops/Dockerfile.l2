@@ -2,7 +2,7 @@ FROM opti-erigon:latest
 
 # FROM ethereumoptimism/reference-optimistic-geth:latest
 
-# RUN apk add --no-cache jq
+RUN apk add --no-cache jq
 
 COPY entrypoint_l2.sh /entrypoint.sh
 
