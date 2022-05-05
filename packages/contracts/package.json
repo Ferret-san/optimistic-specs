@@ -17,7 +17,7 @@
     "forge:install": "forge install",
     "build:forge": "forge build",
     "build:hh": "yarn hardhat compile",
-    "build": "yarn forge:isntall && yarn build:forge && yarn build:hh",
+    "build": "yarn forge:install && yarn build:forge && yarn build:hh",
     "test:hh": "yarn hardhat test",
     "test": "yarn test:forge",
     "test:forge": "forge test",

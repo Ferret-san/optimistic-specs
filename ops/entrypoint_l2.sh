@@ -3,7 +3,7 @@ set -exu
 
 VERBOSITY=${GETH_VERBOSITY:-3}
 GETH_DATA_DIR=/db
-GETH_CHAINDATA_DIR="$GETH_DATA_DIR/geth/chaindata"
+GETH_CHAINDATA_DIR="$GETH_DATA_DIR/Erigon/chaindata"
 GETH_KEYSTORE_DIR="$GETH_DATA_DIR/keystore"
 CHAIN_ID=$(cat /genesis.json | jq -r .config.chainId)
 BLOCK_SIGNER_PRIVATE_KEY="3e4bde571b86929bf08e2aaad9a6a1882664cd5e65b96fff7d03e1c4e6dfa15c"
@@ -16,7 +16,30 @@ if [ ! -d "$GETH_KEYSTORE_DIR" ]; then
 	erigon account import \
 		--datadir="$GETH_DATA_DIR" \
 		--password="$GETH_DATA_DIR"/password \
-		"$GETH_DATA_DIR"/block-signer-key
+		"$GETH_DATA_DIR"/block-signer-key \
+		--verbosity="$VERBOSITY" \
+		--http \
+		--http.corsdomain="*" \
+		--http.vhosts="*" \
+		--http.addr=0.0.0.0 \
+		--http.port=8545 \
+		--http.api=web3,debug,eth,txpool,net,engine \
+		--ws \
+		--ws.addr=0.0.0.0 \
+		--ws.port=8546 \
+		--ws.origins="*" \
+		--ws.api=debug,eth,txpool,net,engine \
+		--syncmode=full \
+		--nodiscover \
+		--maxpeers=1 \
+		--networkid=$CHAIN_ID \
+		--unlock=$BLOCK_SIGNER_ADDRESS \
+		--mine \
+		--miner.etherbase=$BLOCK_SIGNER_ADDRESS \
+		--password="$GETH_DATA_DIR"/password \
+		--allow-insecure-unlock \
+		--gcmode=archive \
+		"$@"
 else
 	echo "$GETH_KEYSTORE_DIR exists."
 fi
