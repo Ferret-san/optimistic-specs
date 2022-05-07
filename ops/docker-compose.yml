@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: Dockerfile.l2
     ports:
-      - "9545:8545"
+      - "9545:8546"
     volumes:
       - "l2_data:/db"
       - ${PWD}/../.devnet/genesis-l2.json:/genesis.json
@@ -43,7 +43,7 @@ services:
       - --sequencing.enabled
       - --rollup.config=/rollup.json
       - --batchsubmitter.key=/config/bss-key.txt
-      - --l2.eth=http://l2:8545
+      - --l2.eth=http://l2:8546
       - --rpc.addr=0.0.0.0
       - --rpc.port=8545
     ports:
@@ -62,7 +62,7 @@ services:
       dockerfile: ./ops/Dockerfile.l2os
     environment:
       L1_ETH_RPC: http://l1:8545
-      L2_ETH_RPC: http://l2:8545
+      L2_ETH_RPC: http://l2:8546
       ROLLUP_RPC: http://opnode:8545
       OUTPUT_SUBMITTER_POLL_INTERVAL: 10s
       OUTPUT_SUBMITTER_NUM_CONFIRMATIONS: 1

@@ -17,17 +17,15 @@ exec erigon  \
 	--http.corsdomain="*" \
 	--http.vhosts="*" \
 	--http.addr=0.0.0.0 \
-	--http.port=8545 \
+	--http.port=8546 \
 	--http.api=web3,debug,eth,txpool,net,engine \
 	--ws \
 	--syncmode=full \
 	--nodiscover \
 	--maxpeers=1 \
 	--networkid=$CHAIN_ID \
-	#--unlock=$BLOCK_SIGNER_ADDRESS \
 	--mine \
 	--miner.etherbase=$BLOCK_SIGNER_ADDRESS \
-	--password="$ERIGON_DATA_DIR"/password \
+	--miner.sigfile="$ERIGON_DATA_DIR"/block-signer-key \
 	--allow-insecure-unlock \
-	--gcmode=archive \
 	"$@"
